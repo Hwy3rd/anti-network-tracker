@@ -1,0 +1,275 @@
+================================================================================
+  🛡️  ANTI-TRACKER ATBM - Network Reconnaissance Detection Tool 🛡️
+================================================================================
+
+Welcome! This is a Machine Learning-based system to detect network reconnaissance
+attacks (Nmap, Masscan, ARP-scan, etc.) from pcap files or live network traffic.
+
+================================================================================
+  👉 START HERE - QUICK SETUP
+================================================================================
+
+Step 1: Install Dependencies (First Time Only)
+  $ pip install -r requirements.txt
+
+Step 2: Run Demo (No Wireshark Needed!)
+  $ python main.py demo
+  
+  This will:
+  - Create synthetic training data
+  - Train ML models
+  - Test detection on both normal and attack traffic
+  
+  Duration: ~30 seconds
+  
+Step 3: Check It Works
+  $ python main.py stats
+  
+  This shows your trained models are ready to use
+
+================================================================================
+  📚 DOCUMENTATION GUIDE
+================================================================================
+
+Read These In Order:
+
+1. README.md (5 min)
+   ➜ Complete overview of the system
+   ➜ Architecture and features
+   ➜ Key concepts
+
+2. GETTING_STARTED.md (10 min)
+   ➜ Installation details
+   ➜ First-time usage guide
+   ➜ Common commands
+
+3. USAGE_EXAMPLES.md (10 min)
+   ➜ 10+ real-world examples
+   ➜ Step-by-step scenarios
+   ➜ Troubleshooting tips
+
+4. PROJECT_OVERVIEW.md (15 min)
+   ➜ Technical architecture
+   ➜ Data flow diagrams
+   ➜ Detection methods explained
+
+================================================================================
+  🎮 COMMON COMMANDS
+================================================================================
+
+# Run demo with synthetic data (learn the system)
+python main.py demo
+
+# Generate sample pcap files (for testing without Wireshark)
+python generate_pcap.py
+
+# Train model from pcap file
+python main.py train data/pcap_files/nmap_syn_scan.pcap --label attack
+
+# Detect attacks in pcap file
+python main.py detect data/pcap_files/test_traffic.pcap
+
+# Monitor live network traffic (requires Wireshark .pcap or real network)
+python main.py live
+python main.py live --interface "Wi-Fi"
+
+# Show model statistics
+python main.py stats
+
+# Run automated test sequence
+python QUICKSTART.py
+
+================================================================================
+  🚀 BASIC WORKFLOW
+================================================================================
+
+Option A: FASTEST (2 minutes)
+  1. python main.py demo
+  2. python main.py detect data/pcap_files/nmap_syn_scan.pcap
+  ✓ Done! System is working
+
+Option B: REALISTIC (10 minutes)
+  1. pip install -r requirements.txt
+  2. python generate_pcap.py
+  3. python main.py train data/pcap_files/normal_traffic.pcap --label normal
+  4. python main.py train data/pcap_files/nmap_syn_scan.pcap --label attack
+  5. python main.py detect data/pcap_files/masscan_scan.pcap
+  ✓ Models trained and ready to use
+
+Option C: WITH REAL WIRESHARK (20 minutes)
+  1. Open Wireshark and capture normal traffic (1 minute)
+  2. Save as: data/pcap_files/normal.pcap
+  3. Capture attack traffic with Nmap/Masscan
+  4. Save as: data/pcap_files/attack.pcap
+  5. Train: python main.py train data/pcap_files/normal.pcap --label normal
+  6. Train: python main.py train data/pcap_files/attack.pcap --label attack
+  7. Test: python main.py detect data/pcap_files/test.pcap
+  ✓ Real-world detection model created
+
+================================================================================
+  📁 FILE STRUCTURE
+================================================================================
+
+anti-tracker-atbm/
+│
+├── main.py                  ← Start here! Main CLI application
+├── QUICKSTART.py            ← Run automated tests
+├── generate_pcap.py         ← Create sample pcap files
+│
+├── Core Modules (don't edit unless you know what you're doing)
+│   ├── network_monitor.py   ← Capture packets
+│   ├── feature_extractor.py ← Extract detection features
+│   ├── detector.py          ← Detection engine
+│   ├── model_trainer.py     ← Train ML models
+│   ├── alerts.py            ← Alert system
+│   ├── utils.py             ← Utility functions
+│   └── config.py            ← Configuration (CAN EDIT)
+│
+├── Documentation (read these!)
+│   ├── README.md            ← Complete documentation
+│   ├── GETTING_STARTED.md   ← Tutorial
+│   ├── USAGE_EXAMPLES.md    ← Real examples
+│   ├── PROJECT_OVERVIEW.md  ← Technical details
+│   ├── FILE_MANIFEST.md     ← File reference
+│   └── START_HERE.txt       ← This file!
+│
+├── Configuration
+│   ├── requirements.txt      ← Python dependencies
+│   └── .gitignore           ← Git ignore rules
+│
+└── data/                    ← Your data goes here
+    ├── pcap_files/          ← Your pcap files from Wireshark
+    ├── models/              ← Trained ML models (auto-created)
+    └── logs/                ← Log files (auto-created)
+
+================================================================================
+  ⚙️  WHAT GETS DETECTED?
+================================================================================
+
+The system can detect:
+
+✓ Nmap SYN scans
+✓ Nmap ACK scans
+✓ Masscan high-speed scanning
+✓ Unicornscan
+✓ ARP network scanning
+✓ Service enumeration
+✓ DNS enumeration
+✓ Unknown reconnaissance patterns
+
+Detection Uses 3 Methods:
+  1. Rule-based    - Known patterns (instant, no training needed)
+  2. ML-based      - Machine Learning classifier (requires training)
+  3. Anomaly-based - Behavioral detection (unsupervised)
+
+================================================================================
+  ❓ FREQUENTLY ASKED QUESTIONS
+================================================================================
+
+Q: Do I need Wireshark?
+A: No! Use generate_pcap.py to create sample data, or use demo mode.
+   Wireshark is optional - use it to capture real network traffic.
+
+Q: Can I run this on Windows?
+A: Yes! Works on Windows, Linux, and macOS.
+   Live capture on Windows may require Administrator privileges.
+
+Q: How long does training take?
+A: < 1 second for 100 samples. Demo mode < 30 seconds total.
+
+Q: Can I improve detection?
+A: Yes! 3 ways:
+   1. Train on more data (data/pcap_files/)
+   2. Adjust thresholds in config.py
+   3. Add more features in feature_extractor.py
+
+Q: What if I get false positives?
+A: Edit config.py and increase thresholds:
+   - PORT_SCAN_THRESHOLD
+   - CLASSIFICATION_THRESHOLD
+   - ANOMALY_THRESHOLD
+
+Q: What if I get false negatives (miss attacks)?
+A: Edit config.py and decrease thresholds (opposite of above)
+
+Q: Where are the logs?
+A: data/logs/
+   - detector.log (all activity)
+   - alerts.log (only alerts)
+
+Q: Can I deploy this to production?
+A: This is an internal testing tool. For production:
+   1. Add API server
+   2. Add database
+   3. Add user dashboard
+   4. Add response automation
+   See PROJECT_OVERVIEW.md for extension points.
+
+================================================================================
+  🔧 TROUBLESHOOTING
+================================================================================
+
+"No module named 'scapy'"
+  → pip install -r requirements.txt
+
+"Permission denied" (live capture)
+  → Windows: Run as Administrator
+  → Linux/macOS: sudo python main.py live
+
+"No detections found"
+  → Use demo mode first to verify system works
+  → Use generate_pcap.py to create attack samples
+  → Check logs: cat data/logs/detector.log
+
+"Too many false alarms"
+  → Lower thresholds in config.py (increase values)
+  → Adjust CLASSIFICATION_THRESHOLD upward
+
+================================================================================
+  📞 NEXT STEPS
+================================================================================
+
+1. Run the demo:
+   $ python main.py demo
+
+2. Read the documentation:
+   $ Start with: README.md
+
+3. Try an example:
+   $ Read: USAGE_EXAMPLES.md
+
+4. Experiment:
+   $ python generate_pcap.py
+   $ python main.py detect data/pcap_files/nmap_syn_scan.pcap
+
+5. Real network:
+   $ Capture with Wireshark
+   $ Use: python main.py train [file] --label normal|attack
+
+================================================================================
+  📊 PROJECT STATS
+================================================================================
+
+Code Lines:        ~2,000 Python
+Documentation:     ~1,400 lines
+ML Models:         2 (Random Forest + Isolation Forest)
+Detection Methods: 3 (Rule + ML + Anomaly)
+Features:          19 per packet stream
+Supported Attacks: 8+ types
+
+Setup Time:        5-10 minutes
+First Test:        < 1 minute
+Training Time:     < 1 second per sample
+Detection Speed:   Real-time capable
+
+================================================================================
+
+Questions? Read the documentation files:
+- README.md for overview
+- GETTING_STARTED.md for setup help
+- USAGE_EXAMPLES.md for real examples
+- PROJECT_OVERVIEW.md for technical details
+
+Good luck! 🚀
+
+================================================================================
