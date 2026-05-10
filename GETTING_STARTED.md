@@ -454,6 +454,8 @@ python main.py live --interface eth0 --continuous --timeout 5
 
 # Show blocked IP
 sudo iptables -L -n -v
+sudo nft list ruleset
+
 # Unblock a blocked IP
 python main.py unblock --ip 10.0.0.5
 sudo python main.py unblock --ip 10.0.0.5
